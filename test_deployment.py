@@ -5,8 +5,8 @@ Run this to verify the recommender API is working
 import requests
 import json
 
-# Railway deployment URL - UPDATE THIS if different
-BASE_URL = "https://reco-production-9f5f.up.railway.app"
+# Railway deployment URL
+BASE_URL = "https://reco-production-6919.up.railway.app"
 
 def test_root():
     """Test root endpoint"""
