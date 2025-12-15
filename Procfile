@@ -1,1 +1,1 @@
-web: uvicorn recommender_api:app --host 0.0.0.0 --port $PORT
+web: uvicorn recommender_optimized:app --host 0.0.0.0 --port $PORT

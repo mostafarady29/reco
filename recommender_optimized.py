@@ -36,9 +36,13 @@ warnings.filterwarnings('ignore')
 # LOGGING CONFIGURATION
 # ============================================================================
 
+# Configure logging for deployment environments (avoid encoding issues)
 logging.basicConfig(
-    format='{"time":"%(asctime)s", "level":"%(levelname)s", "message":"%(message)s"}',
-    level=logging.INFO
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    level=logging.INFO,
+    handlers=[
+        logging.StreamHandler(sys.stdout)
+    ]
 )
 logger = logging.getLogger(__name__)
 

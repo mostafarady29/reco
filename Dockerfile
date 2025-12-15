@@ -37,5 +37,9 @@ EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
   CMD curl -f http://localhost:8000/api/health || exit 1
 
+# Set Python to unbuffered mode for proper logging in Railway
+ENV PYTHONUNBUFFERED=1
+
 # Start command using Railway's PORT environment variable
-CMD uvicorn recommender_optimized:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1
+# Use shell form to properly expand PORT environment variable
+CMD sh -c "uvicorn recommender_optimized:app --host 0.0.0.0 --port ${PORT:-8000} --workers 1 --log-level info"
