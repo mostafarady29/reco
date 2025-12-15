@@ -65,6 +65,7 @@ class Settings(BaseSettings):
     ALLOWED_ORIGINS: str = "*"
     CONNECTION_POOL_SIZE: int = 10
     CACHE_TTL: int = 3600
+    REQUIRE_DB: bool = False  # Set to False to allow deployment without DB connection
 
     class Config:
         env_file = ".env"
