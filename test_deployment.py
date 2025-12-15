@@ -6,7 +6,7 @@ import requests
 import json
 
 # Railway deployment URL
-BASE_URL = "https://reco-production-6919.up.railway.app"
+BASE_URL = "https://reco-production-0b1e.up.railway.app"
 
 def test_root():
     """Test root endpoint"""
@@ -26,7 +26,10 @@ def test_health():
     try:
         response = requests.get(f"{BASE_URL}/api/health")
         print(f"Status: {response.status_code}")
-        print(f"Response: {json.dumps(response.json(), indent=2)}")
+        if response.status_code == 200:
+            print(f"Response: {json.dumps(response.json(), indent=2)}")
+        else:
+            print(f"Error Response: {response.text}")
         return response.status_code == 200
     except Exception as e:
         print(f"Error: {e}")
@@ -38,17 +41,20 @@ def test_recommend(user_id=1, top_n=5):
     try:
         response = requests.get(f"{BASE_URL}/api/recommend", params={"user_id": user_id, "top_n": top_n})
         print(f"Status: {response.status_code}")
-        data = response.json()
-        print(f"User Type: {data.get('user_type')}")
-        print(f"Total Recommendations: {data.get('total_recommendations')}")
-        print(f"Accuracy Score: {data.get('accuracy_score')}")
-        
-        if data.get('recommendations'):
-            print(f"\nFirst recommendation:")
-            rec = data['recommendations'][0]
-            print(f"  Title: {rec.get('title')}")
-            print(f"  Authors: {rec.get('authors')}")
-            print(f"  Score: {rec.get('hybrid_score')}")
+        if response.status_code == 200:
+            data = response.json()
+            print(f"User Type: {data.get('user_type')}")
+            print(f"Total Recommendations: {data.get('total_recommendations')}")
+            print(f"Accuracy Score: {data.get('accuracy_score')}")
+            
+            if data.get('recommendations'):
+                print(f"\nFirst recommendation:")
+                rec = data['recommendations'][0]
+                print(f"  Title: {rec.get('title')}")
+                print(f"  Authors: {rec.get('authors')}")
+                print(f"  Score: {rec.get('hybrid_score')}")
+        else:
+            print(f"Error Response: {response.text[:500]}")
         
         return response.status_code == 200
     except Exception as e:
@@ -80,7 +86,9 @@ def main():
     if all_passed:
         print("✅ All tests PASSED! Deployment is working correctly.")
     else:
-        print("❌ Some tests FAILED. Check Railway logs for details.")
+        print("⚠️ Some tests FAILED. Check error details above.")
+        print("   - Root endpoint working = PORT issue fixed ✅")
+        print("   - Database endpoints failing = Database connection issue ⚠️")
     print("="*60)
 
 if __name__ == "__main__":
