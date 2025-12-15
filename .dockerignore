@@ -4,7 +4,7 @@
 # Include only necessary files
 !recommender_optimized.py
 !requirements.txt
-!Dockerfile.optimized
+!Dockerfile
 !railway.json
 !nixpacks.toml
 
