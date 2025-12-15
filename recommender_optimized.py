@@ -1079,6 +1079,32 @@ async def log_search(
         raise HTTPException(status_code=500, detail=str(e))
 
 
+@app.get("/debug/ip")
+async def get_ip_info():
+    """Get Railway's IP address and deployment info"""
+    import socket
+    import os
+    
+    try:
+        # Get hostname
+        hostname = socket.gethostname()
+        
+        # Get local IP
+        local_ip = socket.gethostbyname(hostname)
+        
+        # Get environment info
+        return {
+            "hostname": hostname,
+            "local_ip": local_ip,
+            "environment": os.getenv("RAILWAY_ENVIRONMENT", "unknown"),
+            "service": os.getenv("RAILWAY_SERVICE_NAME", "unknown"),
+            "port": os.getenv("PORT", "unknown"),
+            "message": "Add this IP to Azure SQL firewall if needed. Or enable 'Allow Azure services' which is easier."
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+
 @app.get("/")
 async def root():
     """API information"""
