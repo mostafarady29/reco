@@ -25,10 +25,6 @@ from fastapi.concurrency import run_in_threadpool
 import sys
 import io
 
-# Set encoding
-sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8', errors='replace')
-sys.stderr = io.TextIOWrapper(sys.stderr.detach(), encoding='utf-8', errors='replace')
-
 warnings.filterwarnings('ignore')
 
 
@@ -36,13 +32,10 @@ warnings.filterwarnings('ignore')
 # LOGGING CONFIGURATION
 # ============================================================================
 
-# Configure logging for deployment environments (avoid encoding issues)
+# Configure logging for deployment environments
 logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s',
-    level=logging.INFO,
-    handlers=[
-        logging.StreamHandler(sys.stdout)
-    ]
+    level=logging.INFO
 )
 logger = logging.getLogger(__name__)
 
