@@ -54,18 +54,18 @@ logger = logging.getLogger(__name__)
 class Settings(BaseSettings):
     """Application settings"""
     DB_NAME: str = "Insight"
-    DB_USER: str = "sa"
-    DB_PASSWORD: str = "12345678"
-    DB_HOST: str = "MOSTAFA_RADY\\SQLEXPRESS"
+    DB_USER: str = "amasoud"
+    DB_PASSWORD: str = "Ahmed@Masoud"
+    DB_HOST: str = "insight123.database.windows.net"
     DB_PORT: int = 1433
     DB_DRIVER: str = "ODBC Driver 18 for SQL Server"
     API_TITLE: str = "Research Paper Recommender API"
     API_VERSION: str = "2.0.0"
-    ENVIRONMENT: str = "development"
-    ALLOWED_ORIGINS: str = "*"
+    ENVIRONMENT: str = "production"
+    ALLOWED_ORIGINS: str = "https://front-end1-zeta.vercel.app,https://backend-production-139d.up.railway.app"
     CONNECTION_POOL_SIZE: int = 10
     CACHE_TTL: int = 3600
-    REQUIRE_DB: bool = False  # Set to False to allow deployment without DB connection
+    REQUIRE_DB: bool = True  # Database is required for production
 
     class Config:
         env_file = ".env"
